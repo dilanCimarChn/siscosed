@@ -1,0 +1,19 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+.env
+db.sqlite3
+
+# Node.js
+node_modules/
+dist/
+
+# IDEs/Editors
+.vscode/
+.idea/
+*.log
+
+# OS
+.DS_Store
+Thumbs.db
