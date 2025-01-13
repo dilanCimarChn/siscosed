@@ -16,6 +16,8 @@ class Area(models.Model):
 
 from django.contrib.auth.models import User
 
+from django.conf import settings  # Importa settings para usar AUTH_USER_MODEL
+
 class Asistencia(models.Model):
     idasistencia = models.AutoField(primary_key=True)
     fecha = models.DateField(null=True, blank=True)
@@ -24,31 +26,24 @@ class Asistencia(models.Model):
     ip = models.CharField(max_length=30, null=True, blank=True)
     observacion = models.CharField(max_length=50, null=True, blank=True)
     id_usuario = models.IntegerField(null=True, blank=True)
-    
-        # Columnas para auditoría
+
+    # Columnas para auditoría
     fecha_modificacion = models.DateTimeField(null=True, blank=True)
-    usuario_modificador = models.ForeignKey(User, null=True, blank=True, on_delete=models.SET_NULL)
+    usuario_modificador = models.ForeignKey(
+        settings.AUTH_USER_MODEL,  # Apunta al modelo personalizado de usuario
+        null=True, 
+        blank=True, 
+        on_delete=models.SET_NULL
+    )
     valor_anterior = models.TextField(null=True, blank=True)
     valor_actual = models.TextField(null=True, blank=True)
     
     class Meta:
-        db_table = 'asistencia' 
+        db_table = 'asistencia'
         
     def __str__(self):
         return f"Asistencia {self.idasistencia} - {self.fecha}"
 
-class Campo(models.Model):
-    idcampo = models.AutoField(primary_key=True)
-    nombre = models.CharField(max_length=50, null=True, blank=True)
-    tipo = models.IntegerField(null=True, blank=True)
-    id_areaejemplo = models.CharField(max_length=50, null=True, blank=True)
-    id_area = models.IntegerField(null=True, blank=True)
-    
-    class Meta:
-        db_table = 'campo' 
-        
-    def __str__(self):
-        return self.nombre
 
 class Cargo(models.Model):
     idcargo = models.AutoField(primary_key=True)
@@ -178,6 +173,8 @@ class Formacion(models.Model):
     def __str__(self):
         return self.nombre
 
+from django.conf import settings  # Importa settings para usar AUTH_USER_MODEL
+
 class Informe(models.Model):
     idinforme = models.AutoField(primary_key=True)
     cite = models.CharField(max_length=15)
@@ -190,19 +187,24 @@ class Informe(models.Model):
     fechaaceptado = models.DateTimeField(null=True, blank=True)
     estado = models.CharField(max_length=15, null=True, blank=True)
     id_ruta = models.IntegerField(null=True, blank=True)
-    
-        # Columnas para auditoría
+
+    # Columnas para auditoría
     fecha_modificacion = models.DateTimeField(null=True, blank=True)
-    usuario_modificador = models.ForeignKey(User, null=True, blank=True, on_delete=models.SET_NULL)
+    usuario_modificador = models.ForeignKey(
+        settings.AUTH_USER_MODEL,  # Apunta al modelo personalizado de usuario
+        null=True, 
+        blank=True, 
+        on_delete=models.SET_NULL
+    )
     valor_anterior = models.TextField(null=True, blank=True)
     valor_actual = models.TextField(null=True, blank=True)
-    
     
     class Meta:
         db_table = 'informe'
 
     def __str__(self):
         return f"Informe {self.idinforme}"
+
     
 class Proceso(models.Model):
     idproceso = models.AutoField(primary_key=True)
@@ -379,9 +381,11 @@ class TipoDocumento(models.Model):
     def __str__(self):
         return self.nombre
 
-from django.contrib.auth.models import AbstractUser
+from django.contrib.auth.models import AbstractUser, Group, Permission
+from django.db import models
 
 class Usuario(AbstractUser):
+    # Campos adicionales
     codigoUsuario = models.CharField(max_length=16, null=True, blank=True)
     apellidoPaterno = models.CharField(max_length=50, null=True, blank=True)
     apellidoMaterno = models.CharField(max_length=50, null=True, blank=True)
@@ -401,7 +405,7 @@ class Usuario(AbstractUser):
     domicilio = models.CharField(max_length=50, null=True, blank=True)
     tipoLicencia = models.CharField(max_length=50, null=True, blank=True)
     codigoSeguro = models.CharField(max_length=50, null=True, blank=True)
-    email = models.CharField(max_length=50)
+    email = models.EmailField(unique=True)  # Email único como identificador principal
     password = models.CharField(max_length=200)
     codigoBiometrico = models.CharField(max_length=1000, null=True, blank=True)
     estado = models.IntegerField(default=1)
@@ -416,21 +420,45 @@ class Usuario(AbstractUser):
     cfgConductoRegular = models.IntegerField(null=True, blank=True)
     cfgNuevoInforme = models.IntegerField(null=True, blank=True)
     cfgAccesoRutas = models.IntegerField(default=0)
-    
-    class Meta:
-        db_table = 'usuario'
 
-    # Agregar el related_name para evitar el conflicto de acceso reverso
+    # Configuración para usar email como identificador principal
+    username = None  # Eliminar el campo `username`
+    USERNAME_FIELD = 'email'  # Identificador principal
+    REQUIRED_FIELDS = []  # Campos adicionales requeridos al crear un usuario
+
+    # Evitar conflictos en las relaciones inversas
     groups = models.ManyToManyField(
-        'auth.Group',
-        related_name='custom_user_set',  # Cambiar el nombre de la relación inversa
+        Group,
+        related_name='usuario_groups',  # Nombre único para la relación inversa
         blank=True
     )
     user_permissions = models.ManyToManyField(
-        'auth.Permission',
-        related_name='custom_user_permissions',  # Cambiar el nombre de la relación inversa
+        Permission,
+        related_name='usuario_permissions',  # Nombre único para la relación inversa
         blank=True
     )
 
+    class Meta:
+        db_table = 'usuario'
+
     def __str__(self):
-        return self.username
+        return self.email
+
+
+    
+    
+    
+from django.contrib.auth.models import AbstractUser
+
+class User(AbstractUser):
+    ROLE_CHOICES = (
+        ('normal', 'Normal'),
+        ('admin', 'Admin'),
+        ('superadmin', 'Superadmin'),
+    )
+    role = models.CharField(max_length=10, choices=ROLE_CHOICES, default='normal')
+
+    def __str__(self):
+        return f"{self.username} ({self.role})"
+
+
