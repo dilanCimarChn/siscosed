@@ -61,6 +61,10 @@ CORS_ALLOWED_ORIGINS = [
 
 ROOT_URLCONF = 'siscosed.urls'
 
+AUTH_USER_MODEL = 'api.Usuario'
+ # Reemplaza "your_app_name" por el nombre de tu aplicación
+
+
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
