@@ -4,8 +4,6 @@ html, body {
     padding: 0;
     height: 100%;
     width: 100%;
-    background-color: #e6f2f8; 
-    font-family: 'Arial', sans-serif;
   }
   
   /* Fondo general */
@@ -35,38 +33,30 @@ html, body {
   /* Contenedor principal */
   .login-container {
     background-color: rgba(179, 216, 224, 0.85); /* Azul más oscuro y opaco */
-    padding: 30px;
-    border-radius: 15px;
+    padding: 60px;
+    border-radius: 25px;
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
-    width: 320px;
+    width: 300px;
     box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.15);
     position: relative;
     z-index: 2;
-    text-align: center;
   }
   
-  /* Etiquetas y campos de formulario */
-  .login-container label {
-    font-size: 14px;
+  /* Estilo del logo */
+  .logo-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+  
+  .logo-text {
+    font-size: 32px;
     color: #003366; /* Azul fuerte */
-    margin-bottom: 8px;
-    text-align: left;
-    width: 100%;
-  }
-  
-  .login-container input {
-    font-size: 14px;
-    padding: 10px;
-    margin-bottom: 15px;
-    border-radius: 5px;
-    border: 1px solid #ccc; /* Borde gris claro */
-    background-color: #fff;
-    color: black;
-    width: 100%;
-    box-sizing: border-box;
+    font-weight: bold;
+    text-align: center;
   }
   
   /* Botón de inicio de sesión */
@@ -75,12 +65,11 @@ html, body {
     color: white;
     font-size: 16px;
     font-weight: bold;
-    padding: 12px;
+    padding: 12px 24px;
     border: none;
     border-radius: 10px;
     cursor: pointer;
     transition: background-color 0.3s ease;
-    width: 100%;
   }
   
   .login-button:hover {
@@ -91,23 +80,16 @@ html, body {
   @media (max-width: 768px) {
     .login-container {
       width: 90%;
-      padding: 20px;
+      padding: 30px;
+    }
+  
+    .logo-text {
+      font-size: 24px;
     }
   
     .login-button {
       font-size: 14px;
-      padding: 10px;
-    }
-  }
-  
-  @media (max-width: 480px) {
-    .login-container {
-      padding: 15px;
-    }
-  
-    .login-button {
-      font-size: 12px;
-      padding: 8px 16px;
+      padding: 10px 20px;
     }
   }
   
