@@ -1,26 +1,59 @@
-import { useState } from 'react';
 import React from 'react';
-import BienvenidoLogin from './views/vlogin/bienvenido-login'; // Pantalla de bienvenida
-import VLogin from './views/vlogin/vlogin'; // Pantalla de login
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import NormalDashboard from './users/normal/NormalDashboard'; // Dashboard normal
-import AdminDashboard from './users/admin/AdminDashboard'; // Dashboard admin
-import SuperAdminDashboard from './users/superadmin/SuperAdminDashboard'; // Dashboard superadmin
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import BienvenidoLogin from './views/vlogin/bienvenido-login';
+import VLogin from './views/vlogin/vlogin';
+import NormalDashboard from './users/normal/NormalDashboard';
+import AdminDashboard from './users/admin/AdminDashboard';
+import SuperAdminDashboard from './users/superadmin/SuperAdminDashboard';
 
 function App() {
+  // Obtén el rol del usuario desde localStorage
+  const userRole = localStorage.getItem('role');
+
+  // Comprobamos si el usuario está autenticado y redirigimos
+  const ProtectedRoute = ({ children, allowedRoles }) => {
+    if (!userRole) {
+      return <Navigate to="/login" />;
+    }
+
+    if (!allowedRoles.includes(userRole)) {
+      return <Navigate to="/" />;
+    }
+
+    return children;
+  };
+
   return (
     <Router>
       <Routes>
-        {/* Ruta para la pantalla de bienvenida */}
         <Route path="/" element={<BienvenidoLogin />} />
-
-        {/* Ruta para el login */}
         <Route path="/login" element={<VLogin />} />
-
-        {/* Rutas para los dashboards de los diferentes roles */}
-        <Route path="/users/normal" element={<NormalDashboard />} />
-        <Route path="/users/admin" element={<AdminDashboard />} />
-        <Route path="/users/superadmin" element={<SuperAdminDashboard />} />
+        
+        {/* Protege las rutas basadas en el rol */}
+        <Route
+          path="/users/normal/"
+          element={
+            <ProtectedRoute allowedRoles={['normal']}>
+              <NormalDashboard />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/users/admin/"
+          element={
+            <ProtectedRoute allowedRoles={['admin']}>
+              <AdminDashboard />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/users/superadmin/"
+          element={
+            <ProtectedRoute allowedRoles={['superadmin']}>
+              <SuperAdminDashboard />
+            </ProtectedRoute>
+          }
+        />
       </Routes>
     </Router>
   );
