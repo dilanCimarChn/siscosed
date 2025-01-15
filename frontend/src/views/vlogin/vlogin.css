@@ -86,6 +86,21 @@ html, body {
   .login-button:hover {
     background-color: #5599b3; /* Azul más oscuro al hacer hover */
   }
+  .show-password {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    margin-top: -10px;
+    margin-bottom: 15px;
+  }
+  .show-password {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    margin-top: -10px;
+    margin-bottom: 15px;
+  }
+    
   
   /* Responsividad */
   @media (max-width: 768px) {

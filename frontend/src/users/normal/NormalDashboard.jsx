@@ -1,5 +1,5 @@
 import React from 'react';
-
+import './normal.css';
 function NormalDashboard() {
   return (
     <div>
