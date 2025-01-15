@@ -1,4 +1,5 @@
 import React from 'react';
+import './superadmin.css';
 
 function SuperAdminDashboard() {
   return (
