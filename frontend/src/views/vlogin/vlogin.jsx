@@ -1,11 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState } from 'react'; 
 import './vlogin.css';
 
 function VLogin() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
-  const [showPassword, setShowPassword] = useState(false); // Estado para mostrar o esconder la contraseña
+  const [showPassword, setShowPassword] = useState(false);
 
   const handleLogin = async () => {
     try {
@@ -15,15 +15,27 @@ function VLogin() {
         body: JSON.stringify({ email, password }),
       });
       const data = await response.json();
+
       if (data.success) {
         alert(`Login exitoso. Rol: ${data.role}`);
-        // Redirige según el rol
-        if (data.role === 'normal') {
-          window.location.href = '/users/normal/';
-        } else if (data.role === 'admin') {
-          window.location.href = '/users/admin/';
-        } else if (data.role === 'superadmin') {
-          window.location.href = '/users/superadmin/';
+        
+        // Guarda el rol del usuario en el localStorage
+        localStorage.setItem('role', data.role);
+
+        // Redirige al dashboard correspondiente según el rol
+        switch(data.role) {
+          case 'normal':
+            window.location.href = '/users/normal/';
+            break;
+          case 'admin':
+            window.location.href = '/users/admin/';
+            break;
+          case 'superadmin':
+            window.location.href = '/users/superadmin/';
+            break;
+          default:
+            setError('Rol no reconocido');
+            break;
         }
       } else {
         setError(data.error);
@@ -45,7 +57,7 @@ function VLogin() {
         />
         <label>Password</label>
         <input
-          type={showPassword ? 'text' : 'password'} // Cambia el tipo entre "password" y "text"
+          type={showPassword ? 'text' : 'password'}
           placeholder="Contraseña"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
