@@ -1,0 +1,15 @@
+.recepcion {
+    padding: 20px;
+    background-color: #f0f8ff;
+    border-radius: 8px;
+  }
+  
+  .recepcion h1 {
+    color: #2f4f4f;
+  }
+  
+  .recepcion p {
+    font-size: 16px;
+    color: #444;
+  }
+  
