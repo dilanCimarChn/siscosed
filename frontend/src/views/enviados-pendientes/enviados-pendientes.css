@@ -1,0 +1,15 @@
+.enviados-pendientes {
+    padding: 20px;
+    background-color: #d9f1e5;
+    border-radius: 8px;
+  }
+  
+  .enviados-pendientes h1 {
+    color: #3c763d;
+  }
+  
+  .enviados-pendientes p {
+    font-size: 16px;
+    color: #5a5a5a;
+  }
+  

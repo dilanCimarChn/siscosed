@@ -1,0 +1,15 @@
+.documento {
+    padding: 20px;
+    background-color: #eef;
+    border-radius: 8px;
+  }
+  
+  .documento h1 {
+    color: #555;
+  }
+  
+  .documento p {
+    font-size: 16px;
+    color: #888;
+  }
+  
