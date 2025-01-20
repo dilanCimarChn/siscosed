@@ -422,7 +422,7 @@ class Usuario(AbstractUser):
     cfgAccesoRutas = models.IntegerField(default=0)
 
     # Configuración para usar email como identificador principal
-    username = None  # Eliminar el campo `username`
+    username = None  # Eliminar campo `username`
     USERNAME_FIELD = 'email'  # Identificador principal
     REQUIRED_FIELDS = []  # Campos adicionales requeridos al crear un usuario
 
