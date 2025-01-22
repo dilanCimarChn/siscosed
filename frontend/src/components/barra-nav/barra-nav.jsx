@@ -8,7 +8,7 @@ function BarraNav() {
   const [role, setRole] = useState('');
 
   useEffect(() => {
-    // Obtiene el rol del usuario desde el localStorage
+    // Obtiene el rol del usuario desde el localStoraged
     const userRole = localStorage.getItem('role');
     setRole(userRole);
   }, []);
