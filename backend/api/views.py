@@ -24,9 +24,6 @@ def login_view(request):
 def redirect_based_on_role(request):
     return JsonResponse({'role': request.user.rol})
 
-from django.http import JsonResponse
-from django.contrib.auth.decorators import login_required
-
 @login_required
 def normal_dashboard(request):
     if request.user.rol != 'normal':

@@ -56,13 +56,12 @@ MIDDLEWARE = [
 CORS_ALLOW_ALL_ORIGINS = True
 
 CORS_ALLOWED_ORIGINS = [
-    "http://localhost:5173",  # URL de tu frontend React
+    "http://localhost:5173",  # URL de frontend React
 ]
 
 ROOT_URLCONF = 'siscosed.urls'
 
 AUTH_USER_MODEL = 'api.Usuario'
- # Reemplaza "your_app_name" por el nombre de tu aplicación
 
 
 TEMPLATES = [
@@ -86,13 +85,13 @@ WSGI_APPLICATION = 'siscosed.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
-
+# CONFIGURACION DE LA BASE DE DATOS 
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'siscosed',
         'USER': 'dbadmin',
-        'PASSWORD': 'Db4dm1n',  # Asegúrate de que la contraseña sea Db4dm1n
+        'PASSWORD': 'Db4dm1n',  
         'HOST': 'localhost',
         'PORT': '3306',
     }
