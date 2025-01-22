@@ -5,12 +5,18 @@ import VLogin from './views/vlogin/vlogin';
 import NormalDashboard from './users/normal/NormalDashboard';
 import AdminDashboard from './users/admin/AdminDashboard';
 import SuperAdminDashboard from './users/superadmin/SuperAdminDashboard';
+import HojaDeRuta from './views/hoja-de-ruta/HojaDeRuta';
+import Documento from './views/documento/Documento';
+import Pendientes from './views/pendientes/Pendientes';
+import EnviadosPendientes from './views/enviados-pendientes/EnviadosPendientes';
+import Archivados from './views/archivados/Archivados';
+import Proveidos from './views/proveidos/Proveidos';
+import BandejaRemitidos from './views/bandeja-remitidos/BandejaRemitidos';
+import Recepcion from './views/recepcion/Recepcion';
 
 function App() {
-  // Obtén el rol del usuario desde localStorage
   const userRole = localStorage.getItem('role');
 
-  // Comprobamos si el usuario está autenticado y redirigimos
   const ProtectedRoute = ({ children, allowedRoles }) => {
     if (!userRole) {
       return <Navigate to="/login" />;
@@ -28,7 +34,7 @@ function App() {
       <Routes>
         <Route path="/" element={<BienvenidoLogin />} />
         <Route path="/login" element={<VLogin />} />
-        
+
         {/* Protege las rutas basadas en el rol */}
         <Route
           path="/users/normal/"
@@ -54,6 +60,16 @@ function App() {
             </ProtectedRoute>
           }
         />
+        
+        {/* Rutas de las vistas */}
+        <Route path="/nuevo/hoja-de-ruta" element={<HojaDeRuta />} />
+        <Route path="/nuevo/documento" element={<Documento />} />
+        <Route path="/recepcion" element={<Recepcion />} />
+        <Route path="/pendientes" element={<Pendientes />} />
+        <Route path="/enviados-pendientes" element={<EnviadosPendientes />} />
+        <Route path="/archivados" element={<Archivados />} />
+        <Route path="/proveidos" element={<Proveidos />} />
+        <Route path="/bandeja-remitidos" element={<BandejaRemitidos />} />
       </Routes>
     </Router>
   );

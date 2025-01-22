@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import BarraNav from '../../components/barra-nav/barra-nav'; // Importar el Navbar
 import './normal.css';
 
 function NormalDashboard() {
@@ -16,6 +17,7 @@ function NormalDashboard() {
 
   return (
     <div>
+      <BarraNav /> {/* Incluir el Navbar */}
       <h1>Bienvenido al Dashboard de Usuario Normal</h1>
       {/* Aquí va el contenido específico del dashboard normal */}
     </div>
