@@ -1,0 +1,16 @@
+.gestion-user {
+    padding: 20px;
+    background-color: #f4f7fa;
+    min-height: 100vh;
+  }
+  
+  .gestion-user h1 {
+    color: #2f3d49;
+    font-size: 2rem;
+  }
+  
+  .gestion-user p {
+    color: #6c7a89;
+    font-size: 1rem;
+  }
+  

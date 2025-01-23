@@ -1,14 +1,15 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import './barra-nav.css';
 
-function BarraNav() {
+function BarraNav({ onLogout }) {
   const [isOpenNew, setIsOpenNew] = useState(false);
   const [isOpenBandeja, setIsOpenBandeja] = useState(false);
   const [role, setRole] = useState('');
+  const navigate = useNavigate();
 
   useEffect(() => {
-    // Obtiene el rol del usuario desde el localStoraged
+    // Obtiene el rol del usuario desde el localStorage
     const userRole = localStorage.getItem('role');
     setRole(userRole);
   }, []);
@@ -26,11 +27,8 @@ function BarraNav() {
       </button>
       <nav className={`nav-menu ${isOpenNew ? 'open' : ''}`}>
         <ul>
-          {/* Enlaces del menú "Nuevo" */}
           <li className="dropdown">
-            <button className="dropbtn" onClick={toggleMenuNew}>
-              Nuevo
-            </button>
+            <button className="dropbtn" onClick={toggleMenuNew}>Nuevo</button>
             {isOpenNew && (
               <div className="dropdown-content">
                 <Link to="/nuevo/hoja-de-ruta">Hoja de Ruta</Link>
@@ -38,12 +36,8 @@ function BarraNav() {
               </div>
             )}
           </li>
-
-          {/* Enlaces del menú "Bandeja de Proveídos" */}
           <li className="dropdown">
-            <button className="dropbtn" onClick={toggleMenuBandeja}>
-              Bandeja de Proveídos
-            </button>
+            <button className="dropbtn" onClick={toggleMenuBandeja}>Bandeja de Proveídos</button>
             {isOpenBandeja && (
               <div className="dropdown-content">
                 <Link to="/recepcion">Recepción</Link>
@@ -54,15 +48,22 @@ function BarraNav() {
               </div>
             )}
           </li>
-
-          {/* Condicional para mostrar o no "Bandeja de Remitidos" dependiendo del rol */}
           {role === 'admin' || role === 'superadmin' ? (
             <li>
               <Link to="/bandeja-remitidos">Bandeja de Remitidos</Link>
             </li>
           ) : null}
+          {role === 'superadmin' && (
+            <li>
+              <Link to="/gestion-usuarios">Gestión de Usuarios</Link>
+            </li>
+          )}
         </ul>
       </nav>
+
+      <div className="logout-container">
+        <button className="logout-btn" onClick={onLogout}>Cerrar sesión</button>
+      </div>
     </div>
   );
 }
