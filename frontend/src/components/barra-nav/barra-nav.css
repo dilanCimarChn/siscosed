@@ -102,22 +102,66 @@
   display: block;
 }
 
-/* Estilos responsivos */
+/* Contenedor principal para la barra de navegación y las vistas */
+.app-container {
+  display: flex;
+  height: 100vh;
+}
+
+/* Barra de navegación */
+.navbar-container {
+  width: 250px;
+  background-color: #1f2a36;
+  position: fixed;
+  height: 100%;
+  top: 0;
+  left: 0;
+  z-index: 1000;
+}
+
+/* Estilo para las vistas a la derecha de la barra */
+.views-container {
+  flex-grow: 1;
+  margin-left: 250px; /* Deja espacio para la barra de navegación */
+  padding: 20px;
+  background-color: #f4f7fa; /* Fondo claro para las vistas */
+  overflow-y: auto;
+}
+
+/* Estilos para las vistas responsivas */
 @media (max-width: 768px) {
-  .navbar {
+  .app-container {
+    flex-direction: column; /* Apilar barra y vistas en pantallas pequeñas */
+  }
+
+  .navbar-container {
     width: 100%;
     position: relative;
   }
 
-  .menu-toggle {
-    display: block;
+  .views-container {
+    margin-left: 0; /* Quitar margen en pantallas pequeñas */
   }
+}
 
-  .nav-menu {
-    display: none;
-  }
+/* Estilos para el botón de cerrar sesión */
+.logout-container {
+  margin-top: auto; /* Empuja el botón hacia el fondo de la barra */
+  padding-top: 20px;
+}
 
-  .nav-menu.open {
-    display: block;
-  }
+.logout-btn {
+  background-color: #e74c3c;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  width: 100%;
+  font-size: 16px;
+  cursor: pointer;
+  border-radius: 5px;
+  transition: background-color 0.3s;
+}
+
+.logout-btn:hover {
+  background-color: #c0392b;
 }
