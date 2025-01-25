@@ -1,31 +1,55 @@
-/* Estilos generales para la barra de navegación y las vistas */
+/* Asegura que ocupen toda la pantalla */
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  width: 100%;
+}
+
+/* Para las pantallas de Bienvenido y Login */
+.full-screen-container {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #e6f2f8; /* Fondo azul claro */
+  position: absolute; /* Asegura que ocupe toda la pantalla */
+  top: 0;
+  left: 0;
+  z-index: 1000; /* Colócalo sobre el resto del contenido */
+}
+
+/* El contenedor de la barra de navegación */
 .app-container {
   display: flex;
-  height: 100vh; /* Ocupa toda la altura de la ventana */
-  overflow: hidden; /* Asegura que no haya desplazamiento no deseado */
+  height: 100vh;
+  overflow: hidden; /* Evitar desplazamiento */
 }
 
 /* Para las vistas de usuario logueado */
 .views-container {
   flex-grow: 1;
-  margin-left: 250px; /* Deja espacio para la barra de navegación */
+  margin-left: 0; /* No deja espacio cuando no hay barra de navegación */
   padding: 20px;
   background-color: #f4f7fa;
   overflow-y: auto;
 }
 
-/* Clase exclusiva para las vistas de login y bienvenida */
-.full-screen-container {
-  width: 100%;
+/* Contenedor del Navbar */
+.navbar-container {
+  position: fixed;
+  top: 0;
+  left: 0;
   height: 100%;
-  padding: 0;
-  margin: 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background-color: #e6f2f8; /* Fondo azul claro */
+  width: 250px;
+  background-color: #003366;
+  z-index: 2000; /* Mantener la barra arriba */
 }
 
+/* Responsividad */
 @media (max-width: 768px) {
   .app-container {
     flex-direction: column;
@@ -35,4 +59,3 @@
     margin-left: 0;
   }
 }
-
