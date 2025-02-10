@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Routes, Route, Navigate, useLocation } from 'react-router-dom';
-import BarraNav from './components/barra-nav/barra-nav'; // Barra de navegación
+import BarraNav from './components/barra-nav/barra-nav'; 
 import BienvenidoLogin from './views/vlogin/bienvenido-login';
 import VLogin from './views/vlogin/vlogin';
 import NormalDashboard from './users/normal/NormalDashboard';
@@ -18,11 +18,11 @@ import GestionUser from './views/gestion-user/gestion-user';
 
 function App() {
   const [userRole, setUserRole] = useState(localStorage.getItem('role'));
-  const location = useLocation(); // Para detectar la URL actual
+  const location = useLocation();
 
   useEffect(() => {
     setUserRole(localStorage.getItem('role'));
-  }, [location.pathname]); // Detectar cambios en la ruta
+  }, [location.pathname]); 
 
   const ProtectedRoute = ({ children, allowedRoles }) => {
     if (!userRole) {
@@ -30,7 +30,7 @@ function App() {
     }
 
     if (!allowedRoles.includes(userRole)) {
-      return <Navigate to="/" />;
+      return <Navigate to="/" />;  // Si el rol no tiene permiso, redirige al inicio
     }
 
     return children;
@@ -42,12 +42,10 @@ function App() {
     window.location.href = '/';
   };
 
-  // Determina si se debe mostrar la barra de navegación
   const showNav = userRole && location.pathname !== "/" && location.pathname !== "/login";
 
   return (
     <div className="app-container">
-      {/* Barra de navegación solo se muestra cuando el usuario está logueado y no está en las páginas de bienvenida ni login */}
       {showNav && (
         <div className="navbar-container">
           <BarraNav onLogout={handleLogout} />
@@ -82,7 +80,6 @@ function App() {
               </ProtectedRoute>
             }
           />
-          {/* Otras rutas */}
           <Route path="/nuevo/hoja-de-ruta" element={<HojaDeRuta />} />
           <Route path="/nuevo/documento" element={<Documento />} />
           <Route path="/recepcion" element={<Recepcion />} />
@@ -90,7 +87,14 @@ function App() {
           <Route path="/enviados-pendientes" element={<EnviadosPendientes />} />
           <Route path="/archivados" element={<Archivados />} />
           <Route path="/proveidos" element={<Proveidos />} />
-          <Route path="/bandeja-remitidos" element={<BandejaRemitidos />} />
+          <Route
+            path="/bandeja-remitidos"
+            element={
+              <ProtectedRoute allowedRoles={['admin', 'superadmin']}>
+                <BandejaRemitidos />
+              </ProtectedRoute>
+            }
+          />
           <Route
             path="/gestion-usuarios"
             element={

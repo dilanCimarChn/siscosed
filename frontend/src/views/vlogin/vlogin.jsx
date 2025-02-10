@@ -1,4 +1,4 @@
-import React, { useState } from 'react'; 
+import React, { useState } from 'react';  
 import './vlogin.css';
 
 function VLogin() {
@@ -38,7 +38,7 @@ function VLogin() {
             break;
         }
       } else {
-        setError(data.error);
+        setError(data.error || 'Error desconocido');
       }
     } catch (error) {
       setError('Error en la conexión.');
