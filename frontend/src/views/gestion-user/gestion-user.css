@@ -1,16 +1,95 @@
 .gestion-user {
-    padding: 20px;
-    background-color: #f4f7fa;
-    min-height: 100vh;
-  }
-  
-  .gestion-user h1 {
-    color: #2f3d49;
-    font-size: 2rem;
-  }
-  
-  .gestion-user p {
-    color: #6c7a89;
-    font-size: 1rem;
-  }
-  
+  padding: 30px;
+  max-width: 1000px;
+  margin: auto;
+  background-color: #f5f9fc; /* Soft light blue background */
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  font-family: Arial, sans-serif;
+}
+
+h1, h2 {
+  text-align: center;
+  color: #2c3e50; /* Dark blue for headings */
+  font-weight: bold;
+}
+
+.form-crear-usuario {
+  display: grid;
+  gap: 15px;
+  grid-template-columns: 1fr 1fr;
+  margin-bottom: 30px;
+}
+
+input, select, button {
+  padding: 10px;
+  font-size: 16px;
+  border-radius: 8px;
+  border: 1px solid #bdc3c7; /* Soft gray border */
+}
+
+button {
+  grid-column: span 2;
+  background-color: #e74c3c; /* Coral accent for buttons */
+  color: #fff;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #c0392b; /* Darker coral when hovered */
+}
+
+.lista-usuarios {
+  margin-top: 20px;
+  list-style-type: none;
+  padding: 0;
+}
+
+.card-usuario {
+  background-color: #ecf0f1; /* Soft light gray for user cards */
+  margin: 10px 0;
+  padding: 15px;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.card-usuario p {
+  margin: 5px 0;
+}
+
+button.btn-desactivar {
+  background-color: #e74c3c; /* Red button for deactivating */
+  color: white;
+  padding: 5px 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+button.btn-activar {
+  background-color: #2ecc71; /* Green button for activating */
+  color: white;
+  padding: 5px 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+button.btn-eliminar {
+  background-color: #f44336; /* Red button for deleting */
+  color: white;
+  padding: 5px 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+button.btn-cambiar-contrasena {
+  background-color: #3498db; /* Blue button for changing password */
+  color: white;
+  padding: 5px 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
