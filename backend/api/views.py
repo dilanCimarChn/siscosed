@@ -1,7 +1,6 @@
 from django.contrib.auth import authenticate, login
 from django.http import JsonResponse
 from rest_framework import viewsets
-from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.decorators import action
 from django.views.decorators.csrf import csrf_exempt
@@ -38,7 +37,12 @@ def redirect_based_on_role(request):
 # Vista de gestión de usuarios sin restricciones de autenticación
 def gestion_usuarios(request):
     usuarios = Usuario.objects.all()
-    usuarios_data = list(usuarios.values('id', 'email', 'rol', 'estado', 'telefono', 'celular', 'domicilio'))
+    usuarios_data = list(usuarios.values(
+        'id', 'email', 'rol', 'estado', 'telefono', 'celular', 'domicilio', 'nombres', 'apellidoPaterno', 'apellidoMaterno',
+        'grado', 'fuerza', 'regimiento', 'carnetMilitar', 'fotoPerfil', 'ci', 'expedido', 'fechaNacimiento', 'sexo',
+        'estadoCivil', 'tipoLicencia', 'codigoSeguro', 'codigoBiometrico', 'id_cargo', 'id_dependencia_cargo',
+        'id_area', 'cfgConductoRegular', 'cfgNuevoInforme', 'cfgAccesoRutas'
+    ))
     return JsonResponse({'usuarios': usuarios_data}, safe=False)
 
 # API REST para los usuarios
@@ -80,34 +84,16 @@ class UsuarioViewSet(viewsets.ModelViewSet):
             return Response({'status': 'Rol actualizado', 'rol': usuario.rol})
         return Response({'error': 'Rol no proporcionado'}, status=400)
 
-    # Actualizar los detalles de un usuario (nombre, apellido, etc.)
+    # Actualizar todos los detalles de un usuario
     @action(detail=True, methods=['put'])
     def update_user(self, request, pk=None):
         usuario = self.get_object()
-        nombre = request.data.get('nombres')
-        apellido_paterno = request.data.get('apellidoPaterno')
-        apellido_materno = request.data.get('apellidoMaterno')
-        telefono = request.data.get('telefono')
-        celular = request.data.get('celular')
-        domicilio = request.data.get('domicilio')
-        foto_perfil = request.data.get('fotoPerfil')
+        data = request.data
 
         # Actualizamos los campos proporcionados
-        if nombre:
-            usuario.nombres = nombre
-        if apellido_paterno:
-            usuario.apellidoPaterno = apellido_paterno
-        if apellido_materno:
-            usuario.apellidoMaterno = apellido_materno
-        if telefono:
-            usuario.telefono = telefono
-        if celular:
-            usuario.celular = celular
-        if domicilio:
-            usuario.domicilio = domicilio
-        if foto_perfil:
-            usuario.fotoPerfil = foto_perfil
-
+        for field, value in data.items():
+            if hasattr(usuario, field):
+                setattr(usuario, field, value)
         usuario.save()
 
         return Response({'status': 'Usuario actualizado', 'usuario': usuario.email})
